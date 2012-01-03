@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<link rel="stylesheet" href="dep/qunit/qunit.css"/>
+		<script src="dep/qunit/qunit.js"></script>
+		<script src="proto.js"></script>
+		<script>
+			/// @class A
+			function A(a) {
+				this.a = a
+			}
+			A.prototype.f1 = function(){
+				return "A.f1"
+			}
+			A.prototype.f2 = function(){
+				return "A.f2"
+			}
+
+			/// @class B @extend A
+			function B(a, b) {
+				A.apply(this, [a])
+				this.b = b
+			}
+			B.prototype.f1 = function(){
+				return "B.f1"
+			}
+			Object.setPrototypeOf(B.prototype, A.prototype)
+
+			module('proto', {
+				setup: function() {
+					this.b = new B()
+				}
+			})
+
+			test('getPrototypeOf', function(){
+				strictEqual(Object.getPrototypeOf(this.b), B.prototype)
+				strictEqual(Object.getPrototypeOf(B.prototype), A.prototype)
+			})
+
+			test('isPrototypeOf', function() {
+				ok(B.prototype.isPrototypeOf(this.b))
+				ok(A.prototype.isPrototypeOf(this.b))
+				ok(!B.prototype.isPrototypeOf({}))
+			})
+
+			test('inheritance', function(){
+				strictEqual('B.f1', this.b.f1())
+				strictEqual('A.f2', this.b.f2())
+			})
+		</script>
+	</head>
+	<body style="width:1024px;margin:auto;">
+		<h1 id="qunit-header">proto</h1>
+		<h2 id="qunit-banner"></h2>
+		<div id="qunit-testrunner-toolbar"></div>
+		<h2 id="qunit-userAgent"></h2>
+		<ol id="qunit-tests"></ol>
+		<div id="qunit-fixture"></div>
+	</body>
+</html>
