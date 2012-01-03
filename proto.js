@@ -1,9 +1,10 @@
 /*
- * @author Shiny Lee
- * @copyright
+ * @copyright 2012 Shiny Lee (liqrliqr [at] gmail.com)
+ * @license LGPLv3 http://www.gnu.org/licenses/lgpl-3.0-standalone.html
  */
 
 /**
+ * Implement `Object.setPrototypeOf` function to encapsulate `__proto__`.
  * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/proto#Example
  */
 (function(Object){
